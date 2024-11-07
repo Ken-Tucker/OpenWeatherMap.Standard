@@ -58,5 +58,4 @@ jobs:
       with:
         name: published_nuget
         path: ${{env.nuget_folder}}
-\
-        path: code-coverage-results.md
+
