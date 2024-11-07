@@ -45,13 +45,6 @@ jobs:
         output: both
         thresholds: '30 80'
 
-    - name: Add Coverage PR Comment
-      uses: marocchino/sticky-pull-request-comment@v2
-      if: github.event_name == 'pull_request'
-      with:
-        recreate: true
-        path: code-coverage-results.md
-
     - name: Pack Nuget
       run: dotnet pack OpenWeatherMap.Standard/OpenWeatherMap.Standard.csproj --output ${{env.nuget_folder}} /p:Version=3.0.${{ github.run_attempt }} --configuration Release
     - name: publish Nuget Packages to GitHub
