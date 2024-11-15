@@ -21,7 +21,7 @@ namespace OpenWeatherMap.Standard.Models
             weatherDayInfo = new WeatherDayInfo();
             @base = string.Empty;
             name = string.Empty;
-            weathers = new Weather[0];
+            weathers = Array.Empty<Weather>();
         }
         private string @base, name;
         private int vis, id, statusCode;

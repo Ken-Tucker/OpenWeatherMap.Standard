@@ -164,7 +164,7 @@ namespace OpenWeatherMap.Standard
         /// <param name="query">query parameters and values. ex: city=baghdad</param>
         /// <param name="getForecastUrl">whether normal weather or forecast-data should be retrieved</param>
         /// <returns>string url</returns>
-        private string GetUrl(string query, bool getForecastUrl = false)
+        internal string GetUrl(string query, bool getForecastUrl = false)
         {
             if (string.IsNullOrEmpty(query))
                 throw new ArgumentNullException(nameof(query), "query can NOT be null or empty string");
@@ -179,7 +179,7 @@ namespace OpenWeatherMap.Standard
         /// <param name="countryCode">country code</param>
         /// <param name="getForecastUrl">determines if the weather-forecast url should be returned</param>
         /// <returns>string url</returns>
-        private string GetWeatherOrForecastDataByZipUrl(string zipCode, string countryCode, bool getForecastUrl)
+        internal string GetWeatherOrForecastDataByZipUrl(string zipCode, string countryCode, bool getForecastUrl)
         {
             if (string.IsNullOrEmpty(zipCode))
                 throw new ArgumentNullException(nameof(zipCode), "zipCode can NOT be null or empty string");
@@ -195,7 +195,7 @@ namespace OpenWeatherMap.Standard
         /// <param name="countryCode">country code</param>
         /// <param name="getForecastUrl">determines if the weather-forecast url should be returned</param>
         /// <returns>string url</returns>
-        private string GetWeatherOrForecastDataByCityNameUrl(string cityName, string countryCode, bool getForecastUrl)
+        internal string GetWeatherOrForecastDataByCityNameUrl(string cityName, string countryCode, bool getForecastUrl)
         {
             if (string.IsNullOrEmpty(cityName))
                 throw new ArgumentNullException(nameof(cityName), "cityName can NOT be null or empty string");
@@ -211,12 +211,12 @@ namespace OpenWeatherMap.Standard
         /// <param name="cityId">city id</param>
         /// <param name="getForecastUrl">determines if the weather-forecast url should be returned</param>
         /// <returns>string url</returns>
-        private string GetWeatherOrForecastDataByCityIdUrl(int cityId, bool getForecastUrl)
+        internal string GetWeatherOrForecastDataByCityIdUrl(int cityId, bool getForecastUrl)
         {
             return GetUrl($"id={cityId}", getForecastUrl);
         }
 
-        private string GetGeoLocationUrl(string city, string state, string country)
+        internal string GetGeoLocationUrl(string city, string state, string country)
         {
             return $"http://api.openweathermap.org/geo/1.0/direct?q={city},{state},{country}&limit=5&appid={AppId}";
         }
@@ -228,7 +228,7 @@ namespace OpenWeatherMap.Standard
         /// <param name="lon"></param>
         /// <param name="getForecastUrl">determines if the weather-forecast url should be returned</param>
         /// <returns>string url</returns>
-        private string GetWeatherOrForecastDataByCoordsUrl(double lat, double lon, bool getForecastUrl)
+        internal string GetWeatherOrForecastDataByCoordsUrl(double lat, double lon, bool getForecastUrl)
         {
             return GetUrl($"lat={lat}&lon={lon}", getForecastUrl);
         }
@@ -337,7 +337,7 @@ namespace OpenWeatherMap.Standard
 
         /// <summary>
         ///     get weather data by coordinates
-        /// </summary>
+        /// </summary>/
         /// <param name="coordinates">coordinates object</param>
         /// <returns>Task of <see cref="WeatherData" /></returns>
         public async Task<WeatherData> GetWeatherDataByCoordinatesAsync(Coordinates coordinates)
@@ -507,7 +507,7 @@ namespace OpenWeatherMap.Standard
             }
         }
 
-        private string GetAirPollutionUrl(float lat, float lon)
+        internal string GetAirPollutionUrl(float lat, float lon)
         {
             return $"https://api.openweathermap.org/data/2.5/air_pollution?lat={lat}&lon={lon}&appid={AppId}";
         }

@@ -15,7 +15,12 @@ namespace OpenWeatherMap.Standard.Implementations
     /// </summary>
     internal class RestServiceCaller : IRestService
     {
-        private static HttpClient _httpClient;
+        internal static HttpClient? _httpClient;
+
+        public RestServiceCaller()
+        {
+
+        }
 
         /// <summary>
         ///     the HttpClient to be used
@@ -40,7 +45,9 @@ namespace OpenWeatherMap.Standard.Implementations
                 if (fetchIconData)
                     await FetchIconDataAsync(wd, iconDataBaseUrl);
 
+#pragma warning disable CS8603 // Possible null reference return.
                 return wd;
+#pragma warning restore CS8603 // Possible null reference return.
             }
 #if DEBUG
             catch (HttpRequestException ex)
@@ -78,7 +85,9 @@ namespace OpenWeatherMap.Standard.Implementations
                 if (fetchIconData)
                     await FetchIconDataAsync(fd, iconDataBaseUrl);
 
+#pragma warning disable CS8603 // Possible null reference return.
                 return fd;
+#pragma warning restore CS8603 // Possible null reference return.
             }
 #if DEBUG
             catch (HttpRequestException ex)
@@ -171,7 +180,7 @@ namespace OpenWeatherMap.Standard.Implementations
             }
 #endif
         }
-        
+
         public async Task<AirPollution> GetAirPollutionAsync(string url)
         {
             try
