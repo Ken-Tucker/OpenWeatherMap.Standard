@@ -68,24 +68,24 @@ namespace OpenWeatherMap.Standard.Core.Test.Implementations
             var url = "http://example.com/forecast";
             var forecastData = new ForecastData { City = new City { Name = "Test City", Sunrise = System.DateTime.Now, Sunset = System.DateTime.Now } };
             var json = JsonConvert.SerializeObject(forecastData);
-
-            _httpMessageHandlerMock.Protected()
+            var mockContent = new StringContent(json);
+            using (var mockResponse = new HttpResponseMessage(HttpStatusCode.OK) { Content = mockContent })
+            {
+                _httpMessageHandlerMock.Protected()
                 .Setup<Task<HttpResponseMessage>>(
                     "SendAsync",
                     ItExpr.IsAny<HttpRequestMessage>(),
                     ItExpr.IsAny<CancellationToken>())
-                .ReturnsAsync(new HttpResponseMessage
-                {
-                    StatusCode = HttpStatusCode.OK,
-                    Content = new StringContent(json)
-                });
+                .ReturnsAsync(mockResponse);
 
-            // Act
-            var result = await _restServiceCaller.GetForecastAsync(url);
 
-            // Assert
-            Assert.NotNull(result);
-            Assert.Equal("Test City", result.City.Name);
+                // Act
+                var result = await _restServiceCaller.GetForecastAsync(url);
+
+                // Assert
+                Assert.NotNull(result);
+                Assert.Equal("Test City", result.City.Name);
+            }
         }
 
         [Fact]
@@ -95,25 +95,24 @@ namespace OpenWeatherMap.Standard.Core.Test.Implementations
             var url = "http://example.com/geolocation";
             var geoLocations = new List<GeoLocation> { new GeoLocation { name = "Test Location" } };
             var json = JsonConvert.SerializeObject(geoLocations);
-
-            _httpMessageHandlerMock.Protected()
+            var mockContent = new StringContent(json);
+            using (var mockResponse = new HttpResponseMessage(HttpStatusCode.OK) { Content = mockContent })
+            {
+                _httpMessageHandlerMock.Protected()
                 .Setup<Task<HttpResponseMessage>>(
                     "SendAsync",
                     ItExpr.IsAny<HttpRequestMessage>(),
                     ItExpr.IsAny<CancellationToken>())
-                .ReturnsAsync(new HttpResponseMessage
-                {
-                    StatusCode = HttpStatusCode.OK,
-                    Content = new StringContent(json)
-                });
+                .ReturnsAsync(mockResponse);
 
-            // Act
-            var result = await _restServiceCaller.GetGeoLocationAsync(url);
+                // Act
+                var result = await _restServiceCaller.GetGeoLocationAsync(url);
 
-            // Assert
-            Assert.NotNull(result);
-            Assert.Single(result);
-            Assert.Equal("Test Location", result[0].name);
+                // Assert
+                Assert.NotNull(result);
+                Assert.Single(result);
+                Assert.Equal("Test Location", result[0].name);
+            }
         }
 
         [Fact]
@@ -123,25 +122,24 @@ namespace OpenWeatherMap.Standard.Core.Test.Implementations
             var url = "http://example.com/airpollution";
             var airPollution = new AirPollution { coord = new Coord { lat = 10, lon = 20 } };
             var json = JsonConvert.SerializeObject(airPollution);
-
-            _httpMessageHandlerMock.Protected()
+            var mockContent = new StringContent(json);
+            using (var mockResponse = new HttpResponseMessage(HttpStatusCode.OK) { Content = mockContent })
+            {
+                _httpMessageHandlerMock.Protected()
                 .Setup<Task<HttpResponseMessage>>(
                     "SendAsync",
                     ItExpr.IsAny<HttpRequestMessage>(),
                     ItExpr.IsAny<CancellationToken>())
-                .ReturnsAsync(new HttpResponseMessage
-                {
-                    StatusCode = HttpStatusCode.OK,
-                    Content = new StringContent(json)
-                });
+                .ReturnsAsync(mockResponse);
 
-            // Act
-            var result = await _restServiceCaller.GetAirPollutionAsync(url);
+                // Act
+                var result = await _restServiceCaller.GetAirPollutionAsync(url);
 
-            // Assert
-            Assert.NotNull(result);
-            Assert.Equal(10, result.coord.lat);
-            Assert.Equal(20, result.coord.lon);
+                // Assert
+                Assert.NotNull(result);
+                Assert.Equal(10, result.coord.lat);
+                Assert.Equal(20, result.coord.lon);
+            }
         }
     }
 }
