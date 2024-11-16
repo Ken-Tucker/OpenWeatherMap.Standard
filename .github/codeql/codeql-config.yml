@@ -6,4 +6,7 @@ queries:
   - name: Queries from the default suite, plus lower severity and precision queries
     uses: security-extended
 paths-ignore: 
-  - 'OpenWeatherMap.Standard.MVC.Sample/obj/Debug/net8.0/generated'
+    # Ignore all files with the .Designer.cs extension (generated code)
+  - '*.Designer.cs'
+   # Ignore all files with the .generated.cs extension (generated code)
+  - '*.generated.cs'
