@@ -30,20 +30,21 @@ jobs:
       run: dotnet build --configuration Release --no-restore
 
     - name: Test
-      run: dotnet test OpenWeatherMap.Standard.sln --configuration Release --no-build --verbosity normal --collect:"XPlat Code Coverage" --results-directory ./coverage
+      run: dotnet test OpenWeatherMap.Standard.sln --configuration Release-p:CollectCoverage=true -p:CoverletOutput=TestResults/ -p:CoverletOutputFormat=opencover --no-build --verbosity normal
 
-    - name: Code Coverage Report
-      uses: irongut/CodeCoverageSummary@v1.3.0
+    - name: Create Test Coverage Badge
+      uses: simon-k/dotnet-code-coverage-badge@v1.0.0
+      id: create_coverage_badge
       with:
-        filename: coverage/**/coverage.cobertura.xml
-        badge: true
-        fail_below_min: false
-        format: markdown
-        hide_branch_rate: false
-        hide_complexity: true
-        indicators: true
-        output: both
-        thresholds: '30 80'
+        label: Unit Test Coverage
+        color: brightgreen
+        path: OpenWeatherMap.Standard.Core.Test/TestResults/coverage.opencover.xml
+        gist-filename: code-coverage.json
+        gist-id: 05708cb0180d790434ef8a4b5499beb7
+        gist-auth-token: ${{ secrets.GIST_AUTH_TOKEN }}       
+    - name: Print code coverage
+      run: echo "Code coverage percentage ${{steps.create_coverage_badge.outputs.percentage}}%"
+
 
     - name: Pack Nuget
       run: dotnet pack OpenWeatherMap.Standard/OpenWeatherMap.Standard.csproj --output ${{env.nuget_folder}} /p:Version=3.0.${{ github.run_attempt }} --configuration Release
