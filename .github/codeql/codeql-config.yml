@@ -5,7 +5,7 @@ queries:
     uses: security-and-quality
   - name: Queries from the default suite, plus lower severity and precision queries
     uses: security-extended
-  - paths-ignore: 
+paths-ignore: 
     # Ignore all files with the .Designer.cs extension (generated code)
   - '*.Designer.cs'
    # Ignore all files with the .generated.cs extension (generated code)
