@@ -1,34 +1,37 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;net8.0</TargetFrameworks>
-    <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
-    <Version>3.0.0</Version>
-    <Description>Standard Class library for getting weather from open weather map's api</Description>
-    <PackageTags>standard library, weather, open weather map</PackageTags>
-    <PackageReleaseNotes>Standard Class library for getting weather from open weather map's api</PackageReleaseNotes>
-    <PackageLicenseUrl></PackageLicenseUrl>
-    <PackageProjectUrl>https://github.com/vb2ae/OpenWeatherMap.Standard/</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/vb2ae/OpenWeatherMap.standard</RepositoryUrl>
-    <RepositoryType>GIT</RepositoryType>
-    <PackOnBuild>true</PackOnBuild>
-    <PackageVersion>3.0.0</PackageVersion>
-    <Authors>Ken Tucker </Authors>
-    <PackageId>OpenWeatherMap.Standard</PackageId>
-    <AssemblyVersion>3.0.0</AssemblyVersion>
-    <FileVersion>3.0.0</FileVersion>
-    <Copyright>2024</Copyright>
-    <PackageLicenseExpression>MIT</PackageLicenseExpression>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFrameworks>netstandard2.0;net8.0</TargetFrameworks>
+		<GeneratePackageOnBuild>False</GeneratePackageOnBuild>
+		<Version>3.0.0</Version>
+		<Description>Standard Class library for getting weather from open weather map's api</Description>
+		<PackageTags>standard library, weather, open weather map</PackageTags>
+		<PackageReleaseNotes>Standard Class library for getting weather from open weather map's api</PackageReleaseNotes>
+		<PackageLicenseUrl></PackageLicenseUrl>
+		<PackageProjectUrl>https://github.com/vb2ae/OpenWeatherMap.Standard/</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/vb2ae/OpenWeatherMap.standard</RepositoryUrl>
+		<RepositoryType>GIT</RepositoryType>
+		<PackOnBuild>true</PackOnBuild>
+		<PackageVersion>3.0.0</PackageVersion>
+		<Authors>Ken Tucker </Authors>
+		<PackageId>OpenWeatherMap.Standard</PackageId>
+		<AssemblyVersion>3.0.0</AssemblyVersion>
+		<FileVersion>3.0.0</FileVersion>
+		<Copyright>2024</Copyright>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+	</PropertyGroup>
 	<PropertyGroup>
 		<LangVersion>8.0</LangVersion>
 	</PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <PlatformTarget>AnyCPU</PlatformTarget>
-  </PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+		<PlatformTarget>AnyCPU</PlatformTarget>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+	</ItemGroup>
 
+	<ItemGroup>
+		<InternalsVisibleTo Include="OpenWeatherMap.Standard.Core.Test" />
+	</ItemGroup>
 </Project>

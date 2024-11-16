@@ -13,7 +13,7 @@ namespace OpenWeatherMap.Standard.Models
             main = string.Empty;
             desc = string.Empty;
             icon = string.Empty;
-            iconData = new byte[0];
+            iconData = Array.Empty<byte>();
         }
         private int id;
         private string main, desc, icon;

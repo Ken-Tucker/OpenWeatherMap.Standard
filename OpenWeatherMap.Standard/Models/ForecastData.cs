@@ -12,7 +12,7 @@ namespace OpenWeatherMap.Standard.Models
         public ForecastData()
         {
             city = new City();
-            weatherData = new WeatherData[0];
+            weatherData = Array.Empty<WeatherData>();
         }
         private City city;
         private int cnt, statusCode;
