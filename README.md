@@ -4,7 +4,7 @@
 
 [![CodeQL](https://github.com/vb2ae/OpenWeatherMap.Standard/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/vb2ae/OpenWeatherMap.Standard/actions/workflows/codeql-analysis.yml)
 
-![Code Coverage](https://img.shields.io/badge/Code%20Coverage-33%25-yellow?style=flat)
+![Code Coverage](https://img.shields.io/badge/Code%20Coverage-69%25-yellow?style=flat)
 
 [![NuGet Package](https://img.shields.io/nuget/v/OpenWeatherMap.Standard.svg?logo=nuget&logoColor=white&&style=for-the-badge&colorB=green)](https://www.nuget.org/packages/OpenWeatherMap.Standard)
 
