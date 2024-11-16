@@ -44,24 +44,21 @@ namespace OpenWeatherMap.Standard.Core.Test.Implementations
                 }
             };
             var json = JsonConvert.SerializeObject(weatherData);
-
-            _httpMessageHandlerMock.Protected()
-                .Setup<Task<HttpResponseMessage>>(
-                    "SendAsync",
-                    ItExpr.IsAny<HttpRequestMessage>(),
-                    ItExpr.IsAny<CancellationToken>())
-                .ReturnsAsync(new HttpResponseMessage
-                {
-                    StatusCode = HttpStatusCode.OK,
-                    Content = new StringContent(json)
-                });
-
-            // Act
-            var result = await _restServiceCaller.GetAsync(url);
-
-            // Assert
-            Assert.NotNull(result);
-            Assert.Equal("Test City", result.Name);
+            var mockContent = new StringContent(json);
+            using (var mockResponse = new HttpResponseMessage(HttpStatusCode.OK) { Content = mockContent })
+            {
+                _httpMessageHandlerMock.Protected()
+                    .Setup<Task<HttpResponseMessage>>(
+                        "SendAsync",
+                        ItExpr.IsAny<HttpRequestMessage>(),
+                        ItExpr.IsAny<CancellationToken>())
+                    .ReturnsAsync(mockResponse);
+                // Act
+                var result = await _restServiceCaller.GetAsync(url);
+                // Assert
+                Assert.NotNull(result);
+                Assert.Equal("Test City", result.Name);
+            }
         }
 
         [Fact]
