@@ -1,6 +1,6 @@
 # OpenWeatherMap.Standard
 
-![.NET Core](https://github.com/vb2ae/OpenWeatherMap.Standard/workflows/.NET%20Core/badge.svg)
+![.NET Core](https://github.com/vb2ae/OpenWeatherMap.Standard/workflows/.NET%20Core/badge.svg) [![CodeFactor](https://www.codefactor.io/repository/github/ken-tucker/openweathermap.standard/badge)](https://www.codefactor.io/repository/github/ken-tucker/openweathermap.standard)
 
 [![CodeQL](https://github.com/vb2ae/OpenWeatherMap.Standard/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/vb2ae/OpenWeatherMap.Standard/actions/workflows/codeql-analysis.yml)
 
