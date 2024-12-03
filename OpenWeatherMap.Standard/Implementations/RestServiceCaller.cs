@@ -49,7 +49,6 @@ namespace OpenWeatherMap.Standard.Implementations
                 return wd;
 #pragma warning restore CS8603 // Possible null reference return.
             }
-#if DEBUG
             catch (HttpRequestException ex)
             {
                 Debug.WriteLine(ex.Message);
@@ -60,12 +59,6 @@ namespace OpenWeatherMap.Standard.Implementations
                 Debug.WriteLine(ex.Message);
                 return null;
             }
-#else
-            catch
-            {
-                return null;
-            }
-#endif
         }
 
         /// <summary>
@@ -89,7 +82,6 @@ namespace OpenWeatherMap.Standard.Implementations
                 return fd;
 #pragma warning restore CS8603 // Possible null reference return.
             }
-#if DEBUG
             catch (HttpRequestException ex)
             {
                 Debug.WriteLine(ex.Message);
@@ -100,12 +92,6 @@ namespace OpenWeatherMap.Standard.Implementations
                 Debug.WriteLine(ex.Message);
                 return null;
             }
-#else
-            catch
-            {
-                return null;
-            }
-#endif
         }
 
         /// <summary>
@@ -135,7 +121,6 @@ namespace OpenWeatherMap.Standard.Implementations
             {
                 return await HttpClient.GetByteArrayAsync(iconUrl);
             }
-#if DEBUG
             catch (HttpRequestException ex)
             {
                 Debug.WriteLine(ex.Message);
@@ -146,12 +131,6 @@ namespace OpenWeatherMap.Standard.Implementations
                 Debug.WriteLine(ex.Message);
                 return null;
             }
-#else
-            catch
-            {
-                return null;
-            }
-#endif
         }
 
         public async Task<List<GeoLocation>> GetGeoLocationAsync(string url)
@@ -162,7 +141,6 @@ namespace OpenWeatherMap.Standard.Implementations
                 var geoLocations = JsonConvert.DeserializeObject<List<GeoLocation>>(json);
                 return geoLocations;
             }
-#if DEBUG
             catch (HttpRequestException ex)
             {
                 Debug.WriteLine(ex.Message);
@@ -173,12 +151,6 @@ namespace OpenWeatherMap.Standard.Implementations
                 Debug.WriteLine(ex.Message);
                 return null;
             }
-#else
-            catch
-            {
-                return null;
-            }
-#endif
         }
 
         public async Task<AirPollution> GetAirPollutionAsync(string url)
@@ -189,18 +161,11 @@ namespace OpenWeatherMap.Standard.Implementations
                 var airPollution = JsonConvert.DeserializeObject<AirPollution>(json);
                 return airPollution;
             }
-#if DEBUG
             catch (Exception ex)
             {
                 Debug.WriteLine(ex.Message);
                 return null;
             }
-#else
-            catch
-            {
-                return null;
-            }
-#endif      
         }
     }
 }
