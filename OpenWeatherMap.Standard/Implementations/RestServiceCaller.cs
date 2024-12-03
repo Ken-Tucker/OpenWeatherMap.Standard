@@ -161,7 +161,12 @@ namespace OpenWeatherMap.Standard.Implementations
                 var airPollution = JsonConvert.DeserializeObject<AirPollution>(json);
                 return airPollution;
             }
-            catch (Exception ex)
+            catch (HttpRequestException ex)
+            {
+                Debug.WriteLine(ex.Message);
+                return null;
+            }
+            catch (JsonReaderException ex)
             {
                 Debug.WriteLine(ex.Message);
                 return null;
