@@ -1,0 +1,47 @@
+name: Deployment
+
+concurrency:
+  group: production
+  cancel-in-progress: true
+
+on:
+  workflow_run:
+    workflows: [.NET Core]
+    types:
+      - completed
+
+env:
+  package_feed: "https://api.nuget.org/v3/index.json"
+  
+jobs:
+  deployment:
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 9.0.x
+      - name: Get run ID of "Build" workflow
+        id: get-run-id
+        run: |
+            REPO_NAME="${{ github.repository }}"
+            WF_NAME="dotnet-core.yml"
+            RUN_ID=`gh run --repo ${REPO_NAME} list --workflow ${WF_NAME} --json databaseId --jq .[0].databaseId`
+            echo "Detected latest run id of ${RUN_ID} for workflow ${WF_NAME}"
+            echo "run-id=${RUN_ID}" >> "$GITHUB_OUTPUT"
+        env:
+          GH_TOKEN: ${{ github.token }}
+      - name: Download artifact from "Build" workflow
+        uses: actions/download-artifact@v4
+        with:
+            name: published_nuget # Match name used in dotnet-core.yml upload artifact step
+            github-token: ${{ github.token }}
+            repository: ${{ github.repository }}
+            run-id: ${{ steps.get-run-id.outputs.run-id }}
+      - name: Display structure of downloaded files
+        run: ls -R   
+
+      - name: publish Nuget Packages to GitHub
+        run: dotnet nuget push *.nupkg --source ${{env.package_feed}} --api-key ${{secrets.UPLOAD_TO_NUGET}} --skip-duplicate
