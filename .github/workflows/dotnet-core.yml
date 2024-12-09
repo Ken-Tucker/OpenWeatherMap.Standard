@@ -26,6 +26,10 @@ jobs:
         dotnet-version: 9.0.x
     - name: Install dependencies
       run: dotnet restore
+  
+    - name: Install Microsoft SBom tool
+      run: dotnet tool install --global Microsoft.Sbom.DotNetTool
+
     - name: Build
       run: dotnet build --configuration Release --no-restore
 
