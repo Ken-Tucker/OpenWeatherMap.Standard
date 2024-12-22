@@ -8,7 +8,7 @@ on:
 env:
   package_feed: "https://nuget.pkg.github.com/ken-tucker/index.json"
   nuget_folder: "\\packages"
-  nuget_upload: 'OpenWeatherMap.Standard/packages/*.nupkg'
+  nuget_upload: 'packages/*.nupkg'
 
 jobs:
   build:
