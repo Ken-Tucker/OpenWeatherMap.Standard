@@ -25,6 +25,9 @@
 		<LangVersion>8.0</LangVersion>
 		<SignAssembly>True</SignAssembly>
 		<AssemblyOriginatorKeyFile>OpenWeatherMap.Standard.snk</AssemblyOriginatorKeyFile>
+		<Title>Open Weather Map</Title>
+		<PackageIcon>Weather.png</PackageIcon>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
 		<PlatformTarget>AnyCPU</PlatformTarget>
@@ -40,5 +43,16 @@
 
 	<ItemGroup>
 		<InternalsVisibleTo Include="OpenWeatherMap.Standard.Core.Test, PublicKey=00240000048000009400000006020000002400005253413100040000010001006dbb766f89502e4e63658e5c486be9018587bc3fc180c0d23a92ca79eeba9e351ee2e97fdd81ef2321f680394c9d22b6122c399af4f3ac2eb51371ffb6a535216213e2c6e80679eff9575e216b91bfba0f5bd4d537f8be8503cac8dd9051dfee1f5f45d5af9b879982bb1cdcf1032d56dea167df710e6f0664870ad330636acc" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Include="..\OpenWeatherMap.Standard.Core.Test\Weather.png">
+	    <Pack>True</Pack>
+	    <PackagePath>\</PackagePath>
+	  </None>
+	  <None Include="..\README.md">
+	    <Pack>True</Pack>
+	    <PackagePath>\</PackagePath>
+	  </None>
 	</ItemGroup>
 </Project>
