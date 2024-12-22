@@ -6,7 +6,7 @@ on:
   pull_request:
     branches: [ master ]
 env:
-  package_feed: "https://nuget.pkg.github.com/vb2ae/index.json"
+  package_feed: "https://nuget.pkg.github.com/ken-tucker/index.json"
   nuget_folder: "\\packages"
   nuget_upload: 'packages\*.nupkg'
 
@@ -59,7 +59,7 @@ jobs:
       run: echo "Badge data ${{steps.create_coverage_badge.outputs.badge}}"
 
     - name: Pack Nuget
-      run: dotnet pack OpenWeatherMap.Standard/OpenWeatherMap.Standard.csproj --output ${{env.nuget_folder}} --configuration Release
+      run: dotnet pack OpenWeatherMap.Standard/OpenWeatherMap.Standard.csproj --output ${{env.nuget_folder}} --configuration release 
     - name: publish Nuget Packages to GitHub
       run: dotnet nuget push ${{env.nuget_upload}} --source ${{vars.NUGET_FEED}} --api-key ${{secrets.NUGET_PACKAGE_UPLOAD}} --skip-duplicate
       if: github.event_name != 'pull_request'
