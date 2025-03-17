@@ -13,8 +13,4 @@
       <ProjectReference Include="..\OpenWeatherMap.Standard\OpenWeatherMap.Standard.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <PackageReference Update="Nerdbank.GitVersioning" Version="3.7.115" />
-    </ItemGroup>
-
 </Project>
