@@ -189,6 +189,19 @@ namespace OpenWeatherMap.Standard
         }
 
         /// <summary>
+        ///     get the API call url to get weather data by zip code
+        /// </summary>
+        /// <param name="zipCode">zip code</param>
+        /// <param name="country">country</param>
+        /// <param name="getForecastUrl">determines if the weather-forecast url should be returned</param>
+        /// <returns>string url</returns>
+        internal string GetWeatherOrForecastDataByZipUrl(string zipCode, Countries country, bool getForecastUrl)
+        {
+            var countryCode = country.GetStringValue();
+            return GetWeatherOrForecastDataByZipUrl(zipCode, countryCode, getForecastUrl);
+        }
+
+        /// <summary>
         ///     get the API call url to get weather data by city name and country code
         /// </summary>
         /// <param name="cityName">city name</param>
@@ -203,6 +216,19 @@ namespace OpenWeatherMap.Standard
             if (!string.IsNullOrEmpty(countryCode))
                 q += $",{countryCode}";
             return GetUrl(q, getForecastUrl);
+        }
+
+        /// <summary>
+        ///     get the API call url to get weather data by city name and country
+        /// </summary>
+        /// <param name="cityName">city name</param>
+        /// <param name="country">country</param>
+        /// <param name="getForecastUrl">determines if the weather-forecast url should be returned</param>
+        /// <returns>string url</returns>
+        internal string GetWeatherOrForecastDataByCityNameUrl(string cityName, Countries country, bool getForecastUrl)
+        {
+            var countryCode = country.GetStringValue();
+            return GetWeatherOrForecastDataByCityNameUrl(cityName, countryCode, getForecastUrl);
         }
 
         /// <summary>
@@ -253,11 +279,37 @@ namespace OpenWeatherMap.Standard
         ///     get weather data by zip code
         /// </summary>
         /// <param name="zipCode">zip code</param>
+        /// <param name="country">country</param>
+        /// <returns>
+        ///     <see cref="WeatherData" />
+        /// </returns>
+        public async Task<WeatherData> GetWeatherDataByZipAsync(string zipCode, Countries country)
+        {
+            var url = GetWeatherOrForecastDataByZipUrl(zipCode, country, false);
+            return await Service.GetAsync(url, IconDataRootUrl, FetchIcons);
+        }
+
+        /// <summary>
+        ///     get weather data by zip code
+        /// </summary>
+        /// <param name="zipCode">zip code</param>
         /// <param name="countryCode">country code</param>
         /// <returns>Task of <see cref="WeatherData" /></returns>
         public Task<WeatherData> GetWeatherDataByZip(string zipCode, string countryCode)
         {
             var url = GetWeatherOrForecastDataByZipUrl(zipCode, countryCode, false);
+            return Service.GetAsync(url, IconDataRootUrl, FetchIcons);
+        }
+
+        /// <summary>
+        ///     get weather data by zip code
+        /// </summary>
+        /// <param name="zipCode">zip code</param>
+        /// <param name="country">country</param>
+        /// <returns>Task of <see cref="WeatherData" /></returns>
+        public Task<WeatherData> GetWeatherDataByZip(string zipCode, Countries country)
+        {
+            var url = GetWeatherOrForecastDataByZipUrl(zipCode, country, false);
             return Service.GetAsync(url, IconDataRootUrl, FetchIcons);
         }
 
@@ -274,6 +326,18 @@ namespace OpenWeatherMap.Standard
         }
 
         /// <summary>
+        ///     get weather data by city name and country
+        /// </summary>
+        /// <param name="cityName">city name</param>
+        /// <param name="country">country</param>
+        /// <returns>Task of <see cref="WeatherData" /></returns>
+        public async Task<WeatherData> GetWeatherDataByCityNameAsync(string cityName, Countries country)
+        {
+            var url = GetWeatherOrForecastDataByCityNameUrl(cityName, country, false);
+            return await Service.GetAsync(url, IconDataRootUrl, FetchIcons);
+        }
+
+        /// <summary>
         ///     get weather data by city name and country code
         /// </summary>
         /// <param name="cityName">city name</param>
@@ -282,6 +346,18 @@ namespace OpenWeatherMap.Standard
         public Task<WeatherData> GetWeatherDataByCityName(string cityName, string countryCode = "")
         {
             var url = GetWeatherOrForecastDataByCityNameUrl(cityName, countryCode, false);
+            return Service.GetAsync(url, IconDataRootUrl, FetchIcons);
+        }
+
+        /// <summary>
+        ///     get weather data by city name and country
+        /// </summary>
+        /// <param name="cityName">city name</param>
+        /// <param name="country">country</param>
+        /// <returns>Task of <see cref="WeatherData" /></returns>
+        public Task<WeatherData> GetWeatherDataByCityName(string cityName, Countries country)
+        {
+            var url = GetWeatherOrForecastDataByCityNameUrl(cityName, country, false);
             return Service.GetAsync(url, IconDataRootUrl, FetchIcons);
         }
 
@@ -375,6 +451,18 @@ namespace OpenWeatherMap.Standard
         ///     get forecast data by zip code
         /// </summary>
         /// <param name="zipCode">zip code</param>
+        /// <param name="country">country</param>
+        /// <returns>Task of <see cref="ForecastData" /></returns>
+        public async Task<ForecastData> GetForecastDataByZipAsync(string zipCode, Countries country)
+        {
+            var url = GetWeatherOrForecastDataByZipUrl(zipCode, country, true);
+            return await Service.GetForecastAsync(url, IconDataRootUrl, FetchIcons);
+        }
+
+        /// <summary>
+        ///     get forecast data by zip code
+        /// </summary>
+        /// <param name="zipCode">zip code</param>
         /// <param name="countryCode">country code</param>
         /// <returns>
         ///     <see cref="ForecastData" />
@@ -382,6 +470,22 @@ namespace OpenWeatherMap.Standard
         public ForecastData GetForecastDataByZip(string zipCode, string countryCode)
         {
             var url = GetWeatherOrForecastDataByZipUrl(zipCode, countryCode, true);
+            return Task.Run(async () =>
+                    await Service.GetForecastAsync(url, IconDataRootUrl, FetchIcons).ConfigureAwait(false)).GetAwaiter()
+                .GetResult();
+        }
+
+        /// <summary>
+        ///     get forecast data by zip code
+        /// </summary>
+        /// <param name="zipCode">zip code</param>
+        /// <param name="country">country</param>
+        /// <returns>
+        ///     <see cref="ForecastData" />
+        /// </returns>
+        public ForecastData GetForecastDataByZip(string zipCode, Countries country)
+        {
+            var url = GetWeatherOrForecastDataByZipUrl(zipCode, country, true);
             return Task.Run(async () =>
                     await Service.GetForecastAsync(url, IconDataRootUrl, FetchIcons).ConfigureAwait(false)).GetAwaiter()
                 .GetResult();
@@ -400,6 +504,18 @@ namespace OpenWeatherMap.Standard
         }
 
         /// <summary>
+        ///     get forecast data by city name and country
+        /// </summary>
+        /// <param name="cityName">city name</param>
+        /// <param name="country">country</param>
+        /// <returns>Task of <see cref="ForecastData" /></returns>
+        public async Task<ForecastData> GetForecastDataByCityNameAsync(string cityName, Countries country)
+        {
+            var url = GetWeatherOrForecastDataByCityNameUrl(cityName, country, true);
+            return await Service.GetForecastAsync(url, IconDataRootUrl, FetchIcons);
+        }
+
+        /// <summary>
         ///     get forecast data by city name and country code
         /// </summary>
         /// <param name="cityName">city name</param>
@@ -410,6 +526,22 @@ namespace OpenWeatherMap.Standard
         public ForecastData GetForecastDataByCityName(string cityName, string countryCode = "")
         {
             var url = GetWeatherOrForecastDataByCityNameUrl(cityName, countryCode, true);
+            return Task.Run(async () =>
+                    await Service.GetForecastAsync(url, IconDataRootUrl, FetchIcons).ConfigureAwait(false)).GetAwaiter()
+                .GetResult();
+        }
+
+        /// <summary>
+        ///     get forecast data by city name and country
+        /// </summary>
+        /// <param name="cityName">city name</param>
+        /// <param name="country">country</param>
+        /// <returns>
+        ///     <see cref="ForecastData" />
+        /// </returns>
+        public ForecastData GetForecastDataByCityName(string cityName, Countries country)
+        {
+            var url = GetWeatherOrForecastDataByCityNameUrl(cityName, country, true);
             return Task.Run(async () =>
                     await Service.GetForecastAsync(url, IconDataRootUrl, FetchIcons).ConfigureAwait(false)).GetAwaiter()
                 .GetResult();

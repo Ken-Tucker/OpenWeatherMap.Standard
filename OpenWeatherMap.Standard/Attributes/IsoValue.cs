@@ -3,9 +3,9 @@
 namespace OpenWeatherMap.Standard.Attributes
 {
     [AttributeUsage(AttributeTargets.All)]
-    public sealed class LangValue : Attribute
+    public sealed class IsoValue : Attribute
     {
-        public LangValue(string value)
+        public IsoValue(string value)
         {
             Value = value;
         }

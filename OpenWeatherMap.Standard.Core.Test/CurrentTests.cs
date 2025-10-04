@@ -3,6 +3,7 @@ using OpenWeatherMap.Standard.Interfaces;
 using OpenWeatherMap.Standard.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using OpenWeatherMap.Standard.Enums;
 using Xunit;
 
 namespace OpenWeatherMap.Standard.Core.Test
@@ -73,6 +74,24 @@ namespace OpenWeatherMap.Standard.Core.Test
         }
 
         [Fact]
+        public void GetWeatherOrForecastDataByZipUrl_ValidInputWithCountryCode_ReturnsCorrectUrl()
+        {
+            // Arrange
+            var current = new Current(AppId);
+            string zipCode = "12345";
+            string countryCode = "US";
+            bool getForecastUrl = false;
+
+            var country = Countries.UnitedStates;
+            
+            // Act
+            var result = current.GetWeatherOrForecastDataByZipUrl(zipCode, country, getForecastUrl);
+            
+            // Assert
+            Assert.Equal($"https://api.openweathermap.org/data/2.5/weather?zip={zipCode},{countryCode}&units=Metric&appid={AppId}&lang=en", result);
+        }
+
+        [Fact]
         public void GetWeatherOrForecastDataByCityNameUrl_ValidInput_ReturnsCorrectUrl()
         {
             // Arrange
@@ -84,6 +103,24 @@ namespace OpenWeatherMap.Standard.Core.Test
             // Act
             var result = current.GetWeatherOrForecastDataByCityNameUrl(cityName, countryCode, getForecastUrl);
 
+            // Assert
+            Assert.Equal($"https://api.openweathermap.org/data/2.5/weather?q={cityName},{countryCode}&units=Metric&appid={AppId}&lang=en", result);
+        }
+
+        [Fact]
+        public void GetWeatherOrForecastDataByCityNameUrl_ValidInputWithCountryCode_ReturnsCorrectUrl()
+        {
+            // Arrange
+            var current = new Current(AppId);
+            string cityName = "New York";
+            string countryCode = "US";
+            bool getForecastUrl = false;
+            
+            var country = Countries.UnitedStates;
+            
+            // Act
+            var result = current.GetWeatherOrForecastDataByCityNameUrl(cityName, country, getForecastUrl);
+            
             // Assert
             Assert.Equal($"https://api.openweathermap.org/data/2.5/weather?q={cityName},{countryCode}&units=Metric&appid={AppId}&lang=en", result);
         }

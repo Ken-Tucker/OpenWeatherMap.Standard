@@ -27,7 +27,7 @@ namespace OpenWeatherMap.Standard.Sample
             WeatherData data;
             ForecastData forecastData;
             current.Units = WeatherUnits.Imperial;
-            data = await current.GetWeatherDataByZipAsync("32927", "us");
+            data = await current.GetWeatherDataByZipAsync("32927", Countries.UnitedStates);
 
 
             Console.WriteLine(
