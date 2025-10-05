@@ -3,7 +3,7 @@
 namespace OpenWeatherMap.Standard.Enums
 {
     /// <summary>
-    /// available countries enum
+    /// Available countries enum.
     /// </summary>
     public enum Countries
     {
