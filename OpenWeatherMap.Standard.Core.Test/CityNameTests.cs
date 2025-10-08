@@ -23,14 +23,14 @@ namespace OpenWeatherMap.Standard.Core.Test
             var mockRestService = new Mock<IRestService>();
             mockRestService
                 .Setup(service => service.GetAsync(
-                    It.Is<string>(url => url == "https://api.openweathermap.org/data/2.5/weather?q=Cocoa,FL,USA&units=Standard&appid=YOUR_API_KEY&lang=en"),
+                    It.Is<string>(url => url == "https://api.openweathermap.org/data/2.5/weather?q=Cocoa,FL,US&units=Standard&appid=YOUR_API_KEY&lang=en"),
                     It.IsAny<string>(),
                     It.IsAny<bool>()))
                 .ReturnsAsync(expected);
             //var fake = A.Fake<IRestService>();
             //A.CallTo(() => fake.GetAsync("https://api.openweathermap.org/data/2.5/weather?q=Cocoa,FL,USA&units=Standard&appid=YOUR_API_KEY&lang=en", "https://openweathermap.org/img/wn", false)).Returns(Task.FromResult(expected));
             var weather = new Current(Consts.API_KEY, mockRestService.Object, Enums.WeatherUnits.Standard, Languages.English);
-            var res = await weather.GetWeatherDataByCityNameAsync("Cocoa,FL", "USA");
+            var res = await weather.GetWeatherDataByCityNameAsync("Cocoa,FL", Countries.UnitedStates);
             Assert.Equal(expected.Coordinates.Latitude, res.Coordinates.Latitude);
         }
     }

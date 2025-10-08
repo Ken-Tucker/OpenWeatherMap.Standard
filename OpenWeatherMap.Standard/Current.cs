@@ -646,7 +646,7 @@ namespace OpenWeatherMap.Standard
             return await Service.GetGeoLocationAsync(url);
         }
 
-        public async Task<List<GeoLocation>> GetGetLocationAsync(string city, string state, Countries country)
+        public async Task<List<GeoLocation>> GetGeoLocationAsync(string city, string state, Countries country)
         {
             var url = GetGeoLocationUrl(city, state, country);
             return await Service.GetGeoLocationAsync(url);

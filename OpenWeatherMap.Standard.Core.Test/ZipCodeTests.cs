@@ -30,7 +30,7 @@ namespace OpenWeatherMap.Standard.Core.Test
                 .ReturnsAsync(expected);
 
             var weather = new Current(Consts.API_KEY, mockRestService.Object, WeatherUnits.Standard, Languages.English);
-            var res = await weather.GetWeatherDataByZipAsync("32927", "US");
+            var res = await weather.GetWeatherDataByZipAsync("32927", Countries.UnitedStates);
 
             Assert.Equal(expected.Coordinates.Latitude, res.Coordinates.Latitude);
         }

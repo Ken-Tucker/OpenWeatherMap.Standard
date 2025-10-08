@@ -96,7 +96,7 @@ namespace OpenWeatherMap.Avalonia.Sample.ViewModels
             current.Units = WeatherUnits.Imperial;
             Task.Run(async () =>
             {
-                data = await current.GetWeatherDataByZipAsync("32927", "us");
+                data = await current.GetWeatherDataByZipAsync("32927", Countries.UnitedStates);
                 CurrentWeather = $"Current Weather {data.Weathers.First().Description}";
                 CurrentTemperature = $"Current Temperature {data.WeatherDayInfo.Temperature}";
                 HighTemperature = $"High Temperature {data.WeatherDayInfo.MaximumTemperature}";
