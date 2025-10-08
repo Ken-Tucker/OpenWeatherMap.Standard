@@ -202,6 +202,25 @@ namespace OpenWeatherMap.Standard.Core.Test
             // Assert
             Assert.Equal($"http://api.openweathermap.org/geo/1.0/direct?q={city},{state},{country}&limit=5&appid={AppId}", result);
         }
+
+        [Fact]
+        public void GetGeoLocationUrl_ValidInputWithCountryCode_ReturnsCorrectUrl()
+        {
+            // Arrange
+            var current = new Current(AppId);
+            string city = "New York";
+            string state = "NY";
+            string countryCode = "US";
+
+            var country = Countries.UnitedStates;
+            
+            // Act
+            var result = current.GetGeoLocationUrl(city, state, country);
+            
+            // Assert
+            Assert.Equal($"http://api.openweathermap.org/geo/1.0/direct?q={city},{state},{countryCode}&limit=5&appid={AppId}", result);
+        }
+        
         [Fact]
         public void GetWeatherOrForecastDataByCoordsUrl_ValidInput_ReturnsCorrectUrl()
         {

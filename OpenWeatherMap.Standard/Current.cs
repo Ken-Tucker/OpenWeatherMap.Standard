@@ -225,7 +225,7 @@ namespace OpenWeatherMap.Standard
         /// <param name="country">country</param>
         /// <param name="getForecastUrl">determines if the weather-forecast url should be returned</param>
         /// <returns>string url</returns>
-        internal string GetWeatherOrForecastDataByCityNameUrl(string cityName, Countries country, bool getForecastUrl)
+        internal string GetWeatherOrForecastDataByCityNameUrl(string cityName, Countries? country, bool getForecastUrl)
         {
             var countryCode = country.GetStringValue();
             return GetWeatherOrForecastDataByCityNameUrl(cityName, countryCode, getForecastUrl);
@@ -245,6 +245,12 @@ namespace OpenWeatherMap.Standard
         internal string GetGeoLocationUrl(string city, string state, string country)
         {
             return $"http://api.openweathermap.org/geo/1.0/direct?q={city},{state},{country}&limit=5&appid={AppId}";
+        }
+        
+        internal string GetGeoLocationUrl(string city, string state, Countries country)
+        {
+            var countryCode = country.GetStringValue();
+            return GetGeoLocationUrl(city, state, countryCode);
         }
 
         /// <summary>
@@ -269,6 +275,7 @@ namespace OpenWeatherMap.Standard
         /// <returns>
         ///     <see cref="WeatherData" />
         /// </returns>
+        [Obsolete("This method overload is obsolete. Use overload with Countries enum instead.")]
         public async Task<WeatherData> GetWeatherDataByZipAsync(string zipCode, string countryCode)
         {
             var url = GetWeatherOrForecastDataByZipUrl(zipCode, countryCode, false);
@@ -295,6 +302,7 @@ namespace OpenWeatherMap.Standard
         /// <param name="zipCode">zip code</param>
         /// <param name="countryCode">country code</param>
         /// <returns>Task of <see cref="WeatherData" /></returns>
+        [Obsolete("This method overload is obsolete. Use overload with Countries enum instead.")]
         public Task<WeatherData> GetWeatherDataByZip(string zipCode, string countryCode)
         {
             var url = GetWeatherOrForecastDataByZipUrl(zipCode, countryCode, false);
@@ -319,6 +327,7 @@ namespace OpenWeatherMap.Standard
         /// <param name="cityName">city name</param>
         /// <param name="countryCode">country code</param>
         /// <returns>Task of <see cref="WeatherData" /></returns>
+        [Obsolete("This method overload is obsolete. Use overload with Countries enum instead.")]
         public async Task<WeatherData> GetWeatherDataByCityNameAsync(string cityName, string countryCode = "")
         {
             var url = GetWeatherOrForecastDataByCityNameUrl(cityName, countryCode, false);
@@ -331,7 +340,7 @@ namespace OpenWeatherMap.Standard
         /// <param name="cityName">city name</param>
         /// <param name="country">country</param>
         /// <returns>Task of <see cref="WeatherData" /></returns>
-        public async Task<WeatherData> GetWeatherDataByCityNameAsync(string cityName, Countries country)
+        public async Task<WeatherData> GetWeatherDataByCityNameAsync(string cityName, Countries? country)
         {
             var url = GetWeatherOrForecastDataByCityNameUrl(cityName, country, false);
             return await Service.GetAsync(url, IconDataRootUrl, FetchIcons);
@@ -343,6 +352,7 @@ namespace OpenWeatherMap.Standard
         /// <param name="cityName">city name</param>
         /// <param name="countryCode">country code</param>
         /// <returns>Task of <see cref="WeatherData" /></returns>
+        [Obsolete("This method overload is obsolete. Use overload with Countries enum instead.")]
         public Task<WeatherData> GetWeatherDataByCityName(string cityName, string countryCode = "")
         {
             var url = GetWeatherOrForecastDataByCityNameUrl(cityName, countryCode, false);
@@ -355,7 +365,7 @@ namespace OpenWeatherMap.Standard
         /// <param name="cityName">city name</param>
         /// <param name="country">country</param>
         /// <returns>Task of <see cref="WeatherData" /></returns>
-        public Task<WeatherData> GetWeatherDataByCityName(string cityName, Countries country)
+        public Task<WeatherData> GetWeatherDataByCityName(string cityName, Countries? country)
         {
             var url = GetWeatherOrForecastDataByCityNameUrl(cityName, country, false);
             return Service.GetAsync(url, IconDataRootUrl, FetchIcons);
@@ -441,6 +451,7 @@ namespace OpenWeatherMap.Standard
         /// <param name="zipCode">zip code</param>
         /// <param name="countryCode">country code</param>
         /// <returns>Task of <see cref="ForecastData" /></returns>
+        [Obsolete("This method overload is obsolete. Use overload with Countries enum instead.")]
         public async Task<ForecastData> GetForecastDataByZipAsync(string zipCode, string countryCode)
         {
             var url = GetWeatherOrForecastDataByZipUrl(zipCode, countryCode, true);
@@ -467,6 +478,7 @@ namespace OpenWeatherMap.Standard
         /// <returns>
         ///     <see cref="ForecastData" />
         /// </returns>
+        [Obsolete("This method overload is obsolete. Use overload with Countries enum instead.")]
         public ForecastData GetForecastDataByZip(string zipCode, string countryCode)
         {
             var url = GetWeatherOrForecastDataByZipUrl(zipCode, countryCode, true);
@@ -497,6 +509,7 @@ namespace OpenWeatherMap.Standard
         /// <param name="cityName">city name</param>
         /// <param name="countryCode">country code</param>
         /// <returns>Task of <see cref="ForecastData" /></returns>
+        [Obsolete("This method overload is obsolete. Use overload with Countries enum instead.")]
         public async Task<ForecastData> GetForecastDataByCityNameAsync(string cityName, string countryCode = "")
         {
             var url = GetWeatherOrForecastDataByCityNameUrl(cityName, countryCode, true);
@@ -509,7 +522,7 @@ namespace OpenWeatherMap.Standard
         /// <param name="cityName">city name</param>
         /// <param name="country">country</param>
         /// <returns>Task of <see cref="ForecastData" /></returns>
-        public async Task<ForecastData> GetForecastDataByCityNameAsync(string cityName, Countries country)
+        public async Task<ForecastData> GetForecastDataByCityNameAsync(string cityName, Countries? country)
         {
             var url = GetWeatherOrForecastDataByCityNameUrl(cityName, country, true);
             return await Service.GetForecastAsync(url, IconDataRootUrl, FetchIcons);
@@ -523,6 +536,7 @@ namespace OpenWeatherMap.Standard
         /// <returns>
         ///     <see cref="ForecastData" />
         /// </returns>
+        [Obsolete("This method overload is obsolete. Use overload with Countries enum instead.")]
         public ForecastData GetForecastDataByCityName(string cityName, string countryCode = "")
         {
             var url = GetWeatherOrForecastDataByCityNameUrl(cityName, countryCode, true);
@@ -539,7 +553,7 @@ namespace OpenWeatherMap.Standard
         /// <returns>
         ///     <see cref="ForecastData" />
         /// </returns>
-        public ForecastData GetForecastDataByCityName(string cityName, Countries country)
+        public ForecastData GetForecastDataByCityName(string cityName, Countries? country)
         {
             var url = GetWeatherOrForecastDataByCityNameUrl(cityName, country, true);
             return Task.Run(async () =>
@@ -625,7 +639,14 @@ namespace OpenWeatherMap.Standard
 
         #endregion
 
+        [Obsolete("This method overload is obsolete. Use overload with Countries enum instead.")]
         public async Task<List<GeoLocation>> GetGeoLocationAsync(string city, string state, string country)
+        {
+            var url = GetGeoLocationUrl(city, state, country);
+            return await Service.GetGeoLocationAsync(url);
+        }
+
+        public async Task<List<GeoLocation>> GetGetLocationAsync(string city, string state, Countries country)
         {
             var url = GetGeoLocationUrl(city, state, country);
             return await Service.GetGeoLocationAsync(url);

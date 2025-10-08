@@ -54,6 +54,19 @@
             // Assert
             Assert.Equal("NoLangValue", result);
         }
+        
+        [Fact]
+        public void GetStringValue_WithNullValue_ReturnsEmptyString()
+        {
+            // Arrange
+            TestEnum? value = null;
+            
+            // Act
+            var result = value.GetStringValue();
+            
+            // Assert
+            Assert.Equal(string.Empty, result);
+        }
     }
 }
 
