@@ -8,6 +8,8 @@
 
 [![NuGet Package](https://img.shields.io/nuget/v/OpenWeatherMap.Standard.svg?logo=nuget&logoColor=white&&style=for-the-badge&colorB=green)](https://www.nuget.org/packages/OpenWeatherMap.Standard)
 
+[![OpenSSF Best Practices](https://www.bestpractices.dev/projects/9724/badge)](https://www.bestpractices.dev/projects/9724)
+
 
 This is a standard class library where you can call open weather map to get the weather data for a zip code written by Ken Tucker. This library is not from OpenWeatherMap.
 
