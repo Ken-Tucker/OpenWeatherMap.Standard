@@ -10,32 +10,32 @@ using System.Threading.Tasks;
 namespace OpenWeatherMap.Standard
 {
     /// <summary>
-    ///     Forecast class
+    ///     Forecast class.
     /// </summary>
     public class Current
     {
         /// <summary>
-        ///     the API_ROOT
+        ///     The API_ROOT.
         /// </summary>
         private const string API_ROOT = "api.openweathermap.org/data";
 
         /// <summary>
-        ///     the API version
+        ///     The API version.
         /// </summary>
         private const string API_VERSION = "/2.5";
 
         /// <summary>
-        ///     weather request root
+        ///     Weather request root.
         /// </summary>
         private const string WEATHER_REQUESTS_ROOT = "/weather";
 
         /// <summary>
-        ///     forecast request root
+        ///     Forecast request root.
         /// </summary>
         private const string FORECAST_REQUESTS_ROOT = "/forecast";
 
         /// <summary>
-        ///     the root url where the icons are located
+        ///     The root URL where the icons are located.
         /// </summary>
         private const string ICON_DATA_ROOT = "openweathermap.org/img/wn";
 
@@ -43,7 +43,7 @@ namespace OpenWeatherMap.Standard
         private string appId = string.Empty;
 
         /// <summary>
-        ///     default constructor that uses the default IRestService implementation
+        ///     Default constructor that uses the default IRestService implementation.
         /// </summary>
         /// <param name="appId">OWM app id</param>
         public Current(string appId)
@@ -55,7 +55,7 @@ namespace OpenWeatherMap.Standard
         }
 
         /// <summary>
-        ///     a constructor that allows you to set your default measurements system
+        ///     A constructor that allows you to set your default measurements system.
         /// </summary>
         /// <param name="appId">OWM app id</param>
         /// <param name="units">desired system</param>
@@ -69,7 +69,7 @@ namespace OpenWeatherMap.Standard
         }
 
         /// <summary>
-        ///     a constructor that allows you to use your own IRestService implementation
+        ///     A constructor that allows you to use your own IRestService implementation.
         /// </summary>
         /// <param name="appId">OWM app id</param>
         /// <param name="rest">your IRestService implementation</param>
@@ -82,8 +82,8 @@ namespace OpenWeatherMap.Standard
         }
 
         /// <summary>
-        ///     a constructor that allows you to use your own IRestService implementation and set default measurements system and
-        ///     language
+        ///     A constructor that allows you to use your own IRestService implementation and set default measurements system and
+        ///     language.
         /// </summary>
         /// <param name="appId">OWM app id</param>
         /// <param name="rest">your IRestService implementation</param>
@@ -100,17 +100,17 @@ namespace OpenWeatherMap.Standard
         }
 
         /// <summary>
-        ///     the rest service to perform our web calls
+        ///     The rest service to perform our web calls.
         /// </summary>
         public IRestService Service { get; set; }
 
         /// <summary>
-        ///     the root url where the icons are located
+        ///     The root URL where the icons are located.
         /// </summary>
         private string IconDataRootUrl => $"http{(UseHTTPS ? "s" : "")}://{ICON_DATA_ROOT}";
 
         /// <summary>
-        ///     the OWM app id to be used
+        ///     The OWM app id to be used.
         /// </summary>
         public string AppId
         {
@@ -124,7 +124,7 @@ namespace OpenWeatherMap.Standard
         }
 
         /// <summary>
-        ///     the measurements system to be used as the default unless specified
+        ///     The measurements system to be used as the default unless specified.
         ///     <para />
         ///     its default is Metric
         /// </summary>
@@ -133,33 +133,33 @@ namespace OpenWeatherMap.Standard
         /// <summary>
         ///     Translation is applied for the "city name" and "description" fields.
         ///     <para />
-        ///     its default is English
+        ///     Its default is English.
         /// </summary>
         public Languages Languages { get; set; } = Languages.English;
 
         /// <summary>
-        ///     indicate weather to call the API through HTTPS or not.
+        ///     Indicate weather to call the API through HTTPS or not.
         ///     <para />
-        ///     it's highly recommended to leave it true
+        ///     It's highly recommended to leave it true.
         /// </summary>
         public bool UseHTTPS { get; set; } = true;
 
         /// <summary>
-        ///     indicate if the image data of the icons should be fetched from the OWM-site.
+        ///     Indicate if the image data of the icons should be fetched from the OWM-site.
         ///     <para />
-        ///     its default is 'false'
+        ///     Its default is 'false'.
         /// </summary>
         public bool FetchIcons { get; set; } = false;
 
         /// <summary>
-        ///     the number of timestamps, which will be returned in the API response.
+        ///     The number of timestamps, which will be returned in the API response.
         ///     <para />
-        ///     its default (and maximum) is 40 which returns eight weather-conditions per day.
+        ///     Its default (and maximum) is 40 which returns eight weather-conditions per day.
         /// </summary>
         public int ForecastTimestamps { get; set; } = 40;
 
         /// <summary>
-        ///     get the API call url
+        ///     Get the API call URL.
         /// </summary>
         /// <param name="query">query parameters and values. ex: city=baghdad</param>
         /// <param name="getForecastUrl">whether normal weather or forecast-data should be retrieved</param>
@@ -173,7 +173,7 @@ namespace OpenWeatherMap.Standard
         }
 
         /// <summary>
-        ///     get the API call url to get weather data by zip code
+        ///     Get the API call URL to get weather data by zip code.
         /// </summary>
         /// <param name="zipCode">zip code</param>
         /// <param name="countryCode">country code</param>
@@ -189,7 +189,20 @@ namespace OpenWeatherMap.Standard
         }
 
         /// <summary>
-        ///     get the API call url to get weather data by city name and country code
+        ///     Get the API call URL to get weather data by zip code.
+        /// </summary>
+        /// <param name="zipCode">zip code</param>
+        /// <param name="country">country</param>
+        /// <param name="getForecastUrl">determines if the weather-forecast url should be returned</param>
+        /// <returns>string url</returns>
+        internal string GetWeatherOrForecastDataByZipUrl(string zipCode, Countries country, bool getForecastUrl)
+        {
+            var countryCode = country.GetStringValue();
+            return GetWeatherOrForecastDataByZipUrl(zipCode, countryCode, getForecastUrl);
+        }
+
+        /// <summary>
+        ///     Get the API call URL to get weather data by city name and country code.
         /// </summary>
         /// <param name="cityName">city name</param>
         /// <param name="countryCode">country code</param>
@@ -206,7 +219,20 @@ namespace OpenWeatherMap.Standard
         }
 
         /// <summary>
-        ///     get the API call url to get weather data by city id
+        ///     Get the API call URL to get weather data by city name and country.
+        /// </summary>
+        /// <param name="cityName">city name</param>
+        /// <param name="country">country</param>
+        /// <param name="getForecastUrl">determines if the weather-forecast url should be returned</param>
+        /// <returns>string url</returns>
+        internal string GetWeatherOrForecastDataByCityNameUrl(string cityName, Countries? country, bool getForecastUrl)
+        {
+            var countryCode = country.GetStringValue();
+            return GetWeatherOrForecastDataByCityNameUrl(cityName, countryCode, getForecastUrl);
+        }
+
+        /// <summary>
+        ///     Get the API call URL to get weather data by city id.
         /// </summary>
         /// <param name="cityId">city id</param>
         /// <param name="getForecastUrl">determines if the weather-forecast url should be returned</param>
@@ -220,9 +246,15 @@ namespace OpenWeatherMap.Standard
         {
             return $"http://api.openweathermap.org/geo/1.0/direct?q={city},{state},{country}&limit=5&appid={AppId}";
         }
+        
+        internal string GetGeoLocationUrl(string city, string state, Countries country)
+        {
+            var countryCode = country.GetStringValue();
+            return GetGeoLocationUrl(city, state, countryCode);
+        }
 
         /// <summary>
-        ///     get the API call url to get weather data by latitude and longitude
+        ///     Get the API call URL to get weather data by latitude and longitude.
         /// </summary>
         /// <param name="lat">latitude</param>
         /// <param name="lon"></param>
@@ -236,13 +268,14 @@ namespace OpenWeatherMap.Standard
         #region Public Weather-Functions
 
         /// <summary>
-        ///     get weather data by zip code
+        ///     Get weather data by zip code.
         /// </summary>
         /// <param name="zipCode">zip code</param>
         /// <param name="countryCode">country code</param>
         /// <returns>
         ///     <see cref="WeatherData" />
         /// </returns>
+        [Obsolete("This method overload is obsolete. Use overload with Countries enum instead.")]
         public async Task<WeatherData> GetWeatherDataByZipAsync(string zipCode, string countryCode)
         {
             var url = GetWeatherOrForecastDataByZipUrl(zipCode, countryCode, false);
@@ -250,11 +283,26 @@ namespace OpenWeatherMap.Standard
         }
 
         /// <summary>
-        ///     get weather data by zip code
+        ///     Get weather data by zip code.
+        /// </summary>
+        /// <param name="zipCode">zip code</param>
+        /// <param name="country">country</param>
+        /// <returns>
+        ///     <see cref="WeatherData" />
+        /// </returns>
+        public async Task<WeatherData> GetWeatherDataByZipAsync(string zipCode, Countries country)
+        {
+            var url = GetWeatherOrForecastDataByZipUrl(zipCode, country, false);
+            return await Service.GetAsync(url, IconDataRootUrl, FetchIcons);
+        }
+
+        /// <summary>
+        ///     Get weather data by zip code.
         /// </summary>
         /// <param name="zipCode">zip code</param>
         /// <param name="countryCode">country code</param>
         /// <returns>Task of <see cref="WeatherData" /></returns>
+        [Obsolete("This method overload is obsolete. Use overload with Countries enum instead.")]
         public Task<WeatherData> GetWeatherDataByZip(string zipCode, string countryCode)
         {
             var url = GetWeatherOrForecastDataByZipUrl(zipCode, countryCode, false);
@@ -262,11 +310,24 @@ namespace OpenWeatherMap.Standard
         }
 
         /// <summary>
-        ///     get weather data by city name and country code
+        ///     Get weather data by zip code.
+        /// </summary>
+        /// <param name="zipCode">zip code</param>
+        /// <param name="country">country</param>
+        /// <returns>Task of <see cref="WeatherData" /></returns>
+        public Task<WeatherData> GetWeatherDataByZip(string zipCode, Countries country)
+        {
+            var url = GetWeatherOrForecastDataByZipUrl(zipCode, country, false);
+            return Service.GetAsync(url, IconDataRootUrl, FetchIcons);
+        }
+
+        /// <summary>
+        ///     Get weather data by city name and country code.
         /// </summary>
         /// <param name="cityName">city name</param>
         /// <param name="countryCode">country code</param>
         /// <returns>Task of <see cref="WeatherData" /></returns>
+        [Obsolete("This method overload is obsolete. Use overload with Countries enum instead.")]
         public async Task<WeatherData> GetWeatherDataByCityNameAsync(string cityName, string countryCode = "")
         {
             var url = GetWeatherOrForecastDataByCityNameUrl(cityName, countryCode, false);
@@ -274,11 +335,24 @@ namespace OpenWeatherMap.Standard
         }
 
         /// <summary>
-        ///     get weather data by city name and country code
+        ///     Get weather data by city name and country.
+        /// </summary>
+        /// <param name="cityName">city name</param>
+        /// <param name="country">country</param>
+        /// <returns>Task of <see cref="WeatherData" /></returns>
+        public async Task<WeatherData> GetWeatherDataByCityNameAsync(string cityName, Countries? country)
+        {
+            var url = GetWeatherOrForecastDataByCityNameUrl(cityName, country, false);
+            return await Service.GetAsync(url, IconDataRootUrl, FetchIcons);
+        }
+
+        /// <summary>
+        ///     Get weather data by city name and country code.
         /// </summary>
         /// <param name="cityName">city name</param>
         /// <param name="countryCode">country code</param>
         /// <returns>Task of <see cref="WeatherData" /></returns>
+        [Obsolete("This method overload is obsolete. Use overload with Countries enum instead.")]
         public Task<WeatherData> GetWeatherDataByCityName(string cityName, string countryCode = "")
         {
             var url = GetWeatherOrForecastDataByCityNameUrl(cityName, countryCode, false);
@@ -286,7 +360,19 @@ namespace OpenWeatherMap.Standard
         }
 
         /// <summary>
-        ///     get weather data by city id
+        ///     Get weather data by city name and country.
+        /// </summary>
+        /// <param name="cityName">city name</param>
+        /// <param name="country">country</param>
+        /// <returns>Task of <see cref="WeatherData" /></returns>
+        public Task<WeatherData> GetWeatherDataByCityName(string cityName, Countries? country)
+        {
+            var url = GetWeatherOrForecastDataByCityNameUrl(cityName, country, false);
+            return Service.GetAsync(url, IconDataRootUrl, FetchIcons);
+        }
+
+        /// <summary>
+        ///     Get weather data by city id.
         /// </summary>
         /// <param name="cityId">city id</param>
         /// <returns>
@@ -299,7 +385,7 @@ namespace OpenWeatherMap.Standard
         }
 
         /// <summary>
-        ///     get weather data by city id
+        ///     Get weather data by city id.
         /// </summary>
         /// <param name="cityId">city id</param>
         /// <returns>Task of <see cref="WeatherData" /></returns>
@@ -310,7 +396,7 @@ namespace OpenWeatherMap.Standard
         }
 
         /// <summary>
-        ///     get weather data by coordinates
+        ///     Get weather data by coordinates.
         /// </summary>
         /// <param name="lat">latitude</param>
         /// <param name="lon">longitude</param>
@@ -324,7 +410,7 @@ namespace OpenWeatherMap.Standard
         }
 
         /// <summary>
-        ///     get weather data by coordinates
+        ///     Get weather data by coordinates.
         /// </summary>
         /// <param name="lat">latitude</param>
         /// <param name="lon">longitude</param>
@@ -336,7 +422,7 @@ namespace OpenWeatherMap.Standard
         }
 
         /// <summary>
-        ///     get weather data by coordinates
+        ///     Get weather data by coordinates.
         /// </summary>/
         /// <param name="coordinates">coordinates object</param>
         /// <returns>Task of <see cref="WeatherData" /></returns>
@@ -346,7 +432,7 @@ namespace OpenWeatherMap.Standard
         }
 
         /// <summary>
-        ///     get weather data by coordinates
+        ///     Get weather data by coordinates.
         /// </summary>
         /// <param name="coordinates">coordinates object</param>
         /// <returns>Task of <see cref="WeatherData" /></returns>
@@ -360,11 +446,12 @@ namespace OpenWeatherMap.Standard
         #region Public Forecast-Functions
 
         /// <summary>
-        ///     get forecast data by zip code
+        ///     Get forecast data by zip code.
         /// </summary>
         /// <param name="zipCode">zip code</param>
         /// <param name="countryCode">country code</param>
         /// <returns>Task of <see cref="ForecastData" /></returns>
+        [Obsolete("This method overload is obsolete. Use overload with Countries enum instead.")]
         public async Task<ForecastData> GetForecastDataByZipAsync(string zipCode, string countryCode)
         {
             var url = GetWeatherOrForecastDataByZipUrl(zipCode, countryCode, true);
@@ -372,13 +459,26 @@ namespace OpenWeatherMap.Standard
         }
 
         /// <summary>
-        ///     get forecast data by zip code
+        ///     Get forecast data by zip code.
+        /// </summary>
+        /// <param name="zipCode">zip code</param>
+        /// <param name="country">country</param>
+        /// <returns>Task of <see cref="ForecastData" /></returns>
+        public async Task<ForecastData> GetForecastDataByZipAsync(string zipCode, Countries country)
+        {
+            var url = GetWeatherOrForecastDataByZipUrl(zipCode, country, true);
+            return await Service.GetForecastAsync(url, IconDataRootUrl, FetchIcons);
+        }
+
+        /// <summary>
+        ///     Get forecast data by zip code.
         /// </summary>
         /// <param name="zipCode">zip code</param>
         /// <param name="countryCode">country code</param>
         /// <returns>
         ///     <see cref="ForecastData" />
         /// </returns>
+        [Obsolete("This method overload is obsolete. Use overload with Countries enum instead.")]
         public ForecastData GetForecastDataByZip(string zipCode, string countryCode)
         {
             var url = GetWeatherOrForecastDataByZipUrl(zipCode, countryCode, true);
@@ -388,11 +488,28 @@ namespace OpenWeatherMap.Standard
         }
 
         /// <summary>
-        ///     get forecast data by city name and country code
+        ///     Get forecast data by zip code.
+        /// </summary>
+        /// <param name="zipCode">zip code</param>
+        /// <param name="country">country</param>
+        /// <returns>
+        ///     <see cref="ForecastData" />
+        /// </returns>
+        public ForecastData GetForecastDataByZip(string zipCode, Countries country)
+        {
+            var url = GetWeatherOrForecastDataByZipUrl(zipCode, country, true);
+            return Task.Run(async () =>
+                    await Service.GetForecastAsync(url, IconDataRootUrl, FetchIcons).ConfigureAwait(false)).GetAwaiter()
+                .GetResult();
+        }
+
+        /// <summary>
+        ///     Get forecast data by city name and country code.
         /// </summary>
         /// <param name="cityName">city name</param>
         /// <param name="countryCode">country code</param>
         /// <returns>Task of <see cref="ForecastData" /></returns>
+        [Obsolete("This method overload is obsolete. Use overload with Countries enum instead.")]
         public async Task<ForecastData> GetForecastDataByCityNameAsync(string cityName, string countryCode = "")
         {
             var url = GetWeatherOrForecastDataByCityNameUrl(cityName, countryCode, true);
@@ -400,13 +517,26 @@ namespace OpenWeatherMap.Standard
         }
 
         /// <summary>
-        ///     get forecast data by city name and country code
+        ///     Get forecast data by city name and country.
+        /// </summary>
+        /// <param name="cityName">city name</param>
+        /// <param name="country">country</param>
+        /// <returns>Task of <see cref="ForecastData" /></returns>
+        public async Task<ForecastData> GetForecastDataByCityNameAsync(string cityName, Countries? country)
+        {
+            var url = GetWeatherOrForecastDataByCityNameUrl(cityName, country, true);
+            return await Service.GetForecastAsync(url, IconDataRootUrl, FetchIcons);
+        }
+
+        /// <summary>
+        ///     Get forecast data by city name and country code.
         /// </summary>
         /// <param name="cityName">city name</param>
         /// <param name="countryCode">country code</param>
         /// <returns>
         ///     <see cref="ForecastData" />
         /// </returns>
+        [Obsolete("This method overload is obsolete. Use overload with Countries enum instead.")]
         public ForecastData GetForecastDataByCityName(string cityName, string countryCode = "")
         {
             var url = GetWeatherOrForecastDataByCityNameUrl(cityName, countryCode, true);
@@ -416,7 +546,23 @@ namespace OpenWeatherMap.Standard
         }
 
         /// <summary>
-        ///     get forecast data by city id
+        ///     Get forecast data by city name and country.
+        /// </summary>
+        /// <param name="cityName">city name</param>
+        /// <param name="country">country</param>
+        /// <returns>
+        ///     <see cref="ForecastData" />
+        /// </returns>
+        public ForecastData GetForecastDataByCityName(string cityName, Countries? country)
+        {
+            var url = GetWeatherOrForecastDataByCityNameUrl(cityName, country, true);
+            return Task.Run(async () =>
+                    await Service.GetForecastAsync(url, IconDataRootUrl, FetchIcons).ConfigureAwait(false)).GetAwaiter()
+                .GetResult();
+        }
+
+        /// <summary>
+        ///     Get forecast data by city id.
         /// </summary>
         /// <param name="cityId">city id</param>
         /// <returns>Task of <see cref="ForecastData" /></returns>
@@ -427,7 +573,7 @@ namespace OpenWeatherMap.Standard
         }
 
         /// <summary>
-        ///     get forecast data by city id
+        ///     Get forecast data by city id.
         /// </summary>
         /// <param name="cityId">city id</param>
         /// <returns>
@@ -442,7 +588,7 @@ namespace OpenWeatherMap.Standard
         }
 
         /// <summary>
-        ///     get forecast data by coordinates
+        ///     Get forecast data by coordinates.
         /// </summary>
         /// <param name="lat">latitude</param>
         /// <param name="lon">longitude</param>
@@ -454,7 +600,7 @@ namespace OpenWeatherMap.Standard
         }
 
         /// <summary>
-        ///     get forecast data by coordinates
+        ///     Get forecast data by coordinates.
         /// </summary>
         /// <param name="lat">latitude</param>
         /// <param name="lon">longitude</param>
@@ -468,7 +614,7 @@ namespace OpenWeatherMap.Standard
         }
 
         /// <summary>
-        ///     get forecast data by coordinates
+        ///     Get forecast data by coordinates.
         /// </summary>
         /// <param name="coordinates">coordinates object</param>
         /// <returns>
@@ -480,7 +626,7 @@ namespace OpenWeatherMap.Standard
         }
 
         /// <summary>
-        ///     get forecast data by coordinates
+        ///     Get forecast data by coordinates.
         /// </summary>
         /// <param name="coordinates">coordinates object</param>
         /// <returns>
@@ -493,7 +639,14 @@ namespace OpenWeatherMap.Standard
 
         #endregion
 
+        [Obsolete("This method overload is obsolete. Use overload with Countries enum instead.")]
         public async Task<List<GeoLocation>> GetGeoLocationAsync(string city, string state, string country)
+        {
+            var url = GetGeoLocationUrl(city, state, country);
+            return await Service.GetGeoLocationAsync(url);
+        }
+
+        public async Task<List<GeoLocation>> GetGeoLocationAsync(string city, string state, Countries country)
         {
             var url = GetGeoLocationUrl(city, state, country);
             return await Service.GetGeoLocationAsync(url);

@@ -27,7 +27,7 @@ namespace OpenWeatherMap.Standard.Sample
             WeatherData data;
             ForecastData forecastData;
             current.Units = WeatherUnits.Imperial;
-            data = await current.GetWeatherDataByZipAsync("32927", "us");
+            data = await current.GetWeatherDataByZipAsync("32927", Countries.UnitedStates);
 
 
             Console.WriteLine(
@@ -35,13 +35,13 @@ namespace OpenWeatherMap.Standard.Sample
 
             current.Units = WeatherUnits.Metric;
 
-            data = await current.GetWeatherDataByCityNameAsync("berlin", "de");
+            data = await current.GetWeatherDataByCityNameAsync("berlin", Countries.Germany);
 
             Console.WriteLine(
                     $"[city, country code]: current temperature in Berlin, Germany is: {data.WeatherDayInfo.Temperature}");
 
 
-            data = await current.GetWeatherDataByCityNameAsync("baghdad");
+            data = await current.GetWeatherDataByCityNameAsync("baghdad", country: null);
 
             Console.WriteLine($"[city]: current temperature in Baghdad is: {data.WeatherDayInfo.Temperature}");
 
@@ -61,7 +61,7 @@ namespace OpenWeatherMap.Standard.Sample
 
 
 
-            forecastData = await current.GetForecastDataByCityNameAsync("Schnelsen");
+            forecastData = await current.GetForecastDataByCityNameAsync("Schnelsen", country: null);
 
             foreach (var weatherDayInfo in forecastData.WeatherData.Select(a => new
             {
@@ -71,12 +71,12 @@ namespace OpenWeatherMap.Standard.Sample
                 Console.WriteLine(
                     $"[forecast]: Forecast for Schnelsen, Germany at {weatherDayInfo.AcquisitionDateTime}, maximum temp: {weatherDayInfo.WeatherDayInfo.MaximumTemperature}, minimum temp: {weatherDayInfo.WeatherDayInfo.MinimumTemperature}");
 
-            var forecastDataSync = current.GetForecastDataByCityName("schnelsen");
+            var forecastDataSync = current.GetForecastDataByCityName("schnelsen", country: null);
             foreach (var forecast in forecastDataSync.WeatherData)
             {
                 Console.WriteLine(forecast.Weathers.First().Description);
             }
-            var geolocations = await current.GetGeoLocationAsync("titusville", "fl", "usa");
+            var geolocations = await current.GetGeoLocationAsync("titusville", "fl", Countries.UnitedStates);
             foreach (var location in geolocations)
             {
 

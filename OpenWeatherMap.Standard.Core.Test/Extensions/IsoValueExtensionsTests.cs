@@ -5,19 +5,19 @@
     using Xunit;
 
 
-    public class LangValueExtensionTests
+    public class IsoValueExtensionTests
     {
         private enum TestEnum
         {
-            [LangValue("en")]
+            [IsoValue("en")]
             English,
-            [LangValue("fr")]
+            [IsoValue("fr")]
             French,
             NoLangValue
         }
 
         [Fact]
-        public void GetStringValue_WithLangValueAttribute_ReturnsLangValue()
+        public void GetStringValue_WithIsoValueAttribute_ReturnsIsoValue()
         {
             // Arrange
             var value = TestEnum.English;
@@ -30,7 +30,7 @@
         }
 
         [Fact]
-        public void GetStringValue_WithDifferentLangValueAttribute_ReturnsLangValue()
+        public void GetStringValue_WithDifferentIsoValueAttribute_ReturnsIsoValue()
         {
             // Arrange
             var value = TestEnum.French;
@@ -43,7 +43,7 @@
         }
 
         [Fact]
-        public void GetStringValue_WithoutLangValueAttribute_ReturnsEnumName()
+        public void GetStringValue_WithoutIsoValueAttribute_ReturnsEnumName()
         {
             // Arrange
             var value = TestEnum.NoLangValue;
@@ -53,6 +53,19 @@
 
             // Assert
             Assert.Equal("NoLangValue", result);
+        }
+        
+        [Fact]
+        public void GetStringValue_WithNullValue_ReturnsEmptyString()
+        {
+            // Arrange
+            TestEnum? value = null;
+            
+            // Act
+            var result = value.GetStringValue();
+            
+            // Assert
+            Assert.Equal(string.Empty, result);
         }
     }
 }
