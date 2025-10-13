@@ -36,11 +36,15 @@ jobs:
       run: dotnet tool install -g nbgv
     - name: Set Version
       run: nbgv cloud  
-    - name: Checking for external vulnerabilites
+    - name: Checking Vulnerable Nuget Packages
       run: |
-        dotnet list package --vulnerable --include-transitive 2>&1 | tee vuln.log
-        echo "Analyze dotnet list package..."
-        ! grep -q -i "has the following vulnerable packages" vuln.log
+        $outout = dotnet list package --vulnerable --include-transitive 2>&1 | tee build.log
+        echo "Analyze dotnet vulnerable nuget package command log output..."
+        echo $output
+        if ($output -match "critical|high|moderate|low") {
+            Write-Host "Security Vulnerabilities found in Nuget Packages on the log output"
+            exit 1
+        }
     - name: Build
       run: dotnet build --configuration Release --no-restore
 
