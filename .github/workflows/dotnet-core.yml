@@ -20,7 +20,7 @@ jobs:
       security-events: write
       
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@63f60ff59952e7ea4e22f5c4ed6499fc356b035e #v4
       with:
         fetch-depth: 0 # avoid shallow clone so nbgv can do its work
     - name: Setup .NET Core
