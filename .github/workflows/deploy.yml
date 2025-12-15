@@ -20,11 +20,11 @@ jobs:
     runs-on: ubuntu-latest
     environment: production
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: Setup .NET
-        uses: actions/setup-dotnet@v4
+        uses: actions/setup-dotnet@v5
         with:
-          dotnet-version: 9.0.x
+          dotnet-version: 10.0.x
       - name: Get run ID of "Build" workflow
         id: get-run-id
         run: |
@@ -36,7 +36,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
       - name: Download artifact from "Build" workflow
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v7
         with:
             name: published_nuget # Match name used in dotnet-core.yml upload artifact step
             github-token: ${{ github.token }}
