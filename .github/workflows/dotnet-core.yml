@@ -20,13 +20,13 @@ jobs:
       security-events: write
       
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
       with:
         fetch-depth: 0 # avoid shallow clone so nbgv can do its work
     - name: Setup .NET Core
-      uses: actions/setup-dotnet@v4
+      uses: actions/setup-dotnet@v5
       with:
-        dotnet-version: 9.0.x
+        dotnet-version: 10.0.x
     - name: Install dependencies
       run: dotnet restore
   
@@ -64,7 +64,7 @@ jobs:
       run: dotnet nuget push ${{env.nuget_upload}} --source ${{vars.NUGET_FEED}} --api-key ${{secrets.NUGET_PACKAGE_UPLOAD}} --skip-duplicate
       if: github.event_name != 'pull_request'
     - name: Upload Artifact
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v6
       with:
         name: published_nuget
         path: ${{env.nuget_folder}}
