@@ -26,11 +26,6 @@ namespace OpenWeatherMap.Avalonia.Sample
                 // Creates a ServiceProvider containing services from the provided IServiceCollection
                 var services = collection.BuildServiceProvider();
 
-
-                // Line below is needed to remove Avalonia data validation.
-                // Without this line you will get duplicate validations from both Avalonia and CT
-                BindingPlugins.DataValidators.RemoveAt(0);
-
                 var vm = services.GetRequiredService<MainWindowViewModel>();
                 desktop.MainWindow = new MainWindow
                 {
