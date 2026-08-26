@@ -43,21 +43,6 @@ jobs:
     - name: Test
       run: dotnet test OpenWeatherMap.Standard.sln --configuration Release -p:CollectCoverage=true -p:CoverletOutput=TestResults/ -p:CoverletOutputFormat=opencover --no-build --verbosity normal
 
-    - name: Create Test Coverage Badge
-      uses: simon-k/dotnet-code-coverage-badge@63f60ff59952e7ea4e22f5c4ed6499fc356b035e #v1.0.0
-      id: create_coverage_badge
-      with:
-        label: Unit Test Coverage
-        color: brightgreen
-        path: OpenWeatherMap.Standard.Core.Test/TestResults/coverage.opencover.xml
-        gist-filename: code-coverage.json
-        gist-id: 05708cb0180d790434ef8a4b5499beb7
-        gist-auth-token: ${{ secrets.GIST_AUTH_TOKEN }}       
-    - name: Print code coverage
-      run: echo "Code coverage percentage ${{steps.create_coverage_badge.outputs.percentage}}%"
-    - name: Print badge data
-      run: echo "Badge data ${{steps.create_coverage_badge.outputs.badge}}"
-
     - name: Pack Nuget
       run: dotnet pack OpenWeatherMap.Standard/OpenWeatherMap.Standard.csproj --output ${{env.nuget_folder}} --configuration release 
     - name: publish Nuget Packages to GitHub
