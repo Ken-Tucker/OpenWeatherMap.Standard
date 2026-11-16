@@ -1,9 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks>netstandard2.0;net8.0;net9.0;net10.0</TargetFrameworks>
+		<TargetFrameworks>netstandard2.0;net10.0;net11.0</TargetFrameworks>
 		<GeneratePackageOnBuild>False</GeneratePackageOnBuild>
-		<Version>3.0.0</Version>
+		<Version>4.0.0</Version>
 		<Description>Standard Class library for getting weather from open weather map's api</Description>
 		<PackageTags>standard library, weather, open weather map</PackageTags>
 		<PackageReleaseNotes>Standard Class library for getting weather from open weather map's api</PackageReleaseNotes>
@@ -15,14 +15,14 @@
 		<PackageVersion>3.0.0</PackageVersion>
 		<Authors>Ken Tucker </Authors>
 		<PackageId>OpenWeatherMap.Standard</PackageId>
-		<AssemblyVersion>3.0.0</AssemblyVersion>
-		<FileVersion>3.0.0</FileVersion>
+		<AssemblyVersion>4.0.0</AssemblyVersion>
+		<FileVersion>4.0.0</FileVersion>
 		<Copyright>2024</Copyright>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<GenerateSBOM>true</GenerateSBOM>
 	</PropertyGroup>
 	<PropertyGroup>
-		<LangVersion>8.0</LangVersion>
+		<LangVersion>12.0</LangVersion>
 		<SignAssembly>True</SignAssembly>
 		<AssemblyOriginatorKeyFile>OpenWeatherMap.Standard.snk</AssemblyOriginatorKeyFile>
 		<Title>Open Weather Map</Title>
