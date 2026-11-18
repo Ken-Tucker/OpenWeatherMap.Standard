@@ -12,7 +12,7 @@
 		<RepositoryUrl>https://github.com/ken-tucker/OpenWeatherMap.standard</RepositoryUrl>
 		<RepositoryType>GIT</RepositoryType>
 		<PackOnBuild>false</PackOnBuild>
-		<PackageVersion>3.0.0</PackageVersion>
+		<PackageVersion>4.0.0</PackageVersion>
 		<Authors>Ken Tucker </Authors>
 		<PackageId>OpenWeatherMap.Standard</PackageId>
 		<AssemblyVersion>4.0.0</AssemblyVersion>
